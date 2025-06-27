@@ -11,48 +11,36 @@
       color: #fff;
       font-family: 'Courier New', Courier, monospace;
       font-size: 1.5rem;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
     }
 
     #terminal {
       white-space: pre-wrap;
-      padding: 2rem;
-      min-height: 50vh;
-    }
-
-    .buttons {
-      text-align: center;
-      margin-top: 2rem;
+      padding: 1rem;
+      min-height: 3rem;
     }
 
     .cta {
       border: none;
       padding: 1rem 2rem;
-      margin: 0.5rem;
+      margin-top: 2rem;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.1rem;
       border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      background: #CFF800;
+      color: #000;
       transition: transform 0.2s ease;
     }
 
     .cta:hover {
       transform: scale(1.05);
-    }
-
-    /* Individual button colors */
-    .btn-1 {
-      background: #CFF800;
-      color: #000;
-    }
-
-    .btn-2 {
-      background: #FF60A8;
-      color: #fff;
-    }
-
-    .btn-3 {
-      background: #FFEC59;
-      color: #000;
     }
 
     .panda {
@@ -76,14 +64,10 @@
 </head>
 <body>
   <div id="terminal"></div>
-  <div class="buttons">
-    <button class="cta btn-1" onclick="explode()">I wanna know more!</button>
-    <button class="cta btn-2" onclick="explode()">Show me pandas!</button>
-    <button class="cta btn-3" onclick="explode()">Surprise me 🐼</button>
-  </div>
+  <button class="cta" onclick="explode()">Nice 🐼</button>
 
   <script>
-    const text = "Hi, I'm Andrea and this is my little project...";
+    const text = "Hi, I'm Andrea and this is my little project...:)";
     const terminal = document.getElementById('terminal');
     let i = 0;
 
