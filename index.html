@@ -1,7 +1,47 @@
 <!DOCTYPE html>
-<html>
-  <head><title>🐼</title></head>
-  <body style="font-size: 100px; text-align: center; margin-top: 20%;">
-    🐼
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🐼 Rain</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: white;
+    }
+
+    .panda {
+      position: absolute;
+      font-size: 48px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const numPandas = 40;
+
+    for (let i = 0; i < numPandas; i++) {
+      const panda = document.createElement('div');
+      panda.className = 'panda';
+      panda.textContent = '🐼';
+      panda.style.left = Math.random() * 100 + 'vw';
+      panda.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      panda.style.fontSize = (Math.random() * 30 + 30) + 'px';
+      panda.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(panda);
+    }
+  </script>
+</body>
 </html>
