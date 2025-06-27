@@ -2,45 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>🐼 Rain</title>
+  <title>🐼 Andrea's Project</title>
   <style>
     body {
       margin: 0;
-      overflow: hidden;
-      background: white;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.5rem;
+      overflow-x: hidden;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      padding: 2rem;
+      min-height: 50vh;
+    }
+
+    .buttons {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .cta {
+      border: none;
+      padding: 1rem 2rem;
+      margin: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 5px;
+      transition: transform 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: scale(1.05);
+    }
+
+    /* Individual button colors */
+    .btn-1 {
+      background: #CFF800;
+      color: #000;
+    }
+
+    .btn-2 {
+      background: #FF60A8;
+      color: #fff;
+    }
+
+    .btn-3 {
+      background: #FFEC59;
+      color: #000;
     }
 
     .panda {
       position: absolute;
-      font-size: 48px;
-      animation: fall linear infinite;
+      font-size: 32px;
+      animation: explode 1s ease-out forwards;
+      pointer-events: none;
     }
 
-    @keyframes fall {
+    @keyframes explode {
       0% {
-        transform: translateY(-100px) rotate(0deg);
+        transform: scale(1) translate(0, 0);
         opacity: 1;
       }
       100% {
-        transform: translateY(110vh) rotate(360deg);
+        transform: scale(1.5) translate(var(--dx), var(--dy));
         opacity: 0;
       }
     }
   </style>
 </head>
 <body>
-  <script>
-    const numPandas = 40;
+  <div id="terminal"></div>
+  <div class="buttons">
+    <button class="cta btn-1" onclick="explode()">I wanna know more!</button>
+    <button class="cta btn-2" onclick="explode()">Show me pandas!</button>
+    <button class="cta btn-3" onclick="explode()">Surprise me 🐼</button>
+  </div>
 
-    for (let i = 0; i < numPandas; i++) {
-      const panda = document.createElement('div');
-      panda.className = 'panda';
-      panda.textContent = '🐼';
-      panda.style.left = Math.random() * 100 + 'vw';
-      panda.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      panda.style.fontSize = (Math.random() * 30 + 30) + 'px';
-      panda.style.animationDelay = Math.random() * 5 + 's';
-      document.body.appendChild(panda);
+  <script>
+    const text = "Hi, I'm Andrea and this is my little project...";
+    const terminal = document.getElementById('terminal');
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        terminal.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeWriter();
+
+    function explode() {
+      for (let i = 0; i < 20; i++) {
+        const panda = document.createElement('div');
+        panda.className = 'panda';
+        panda.textContent = '🐼';
+
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+
+        panda.style.left = x + 'px';
+        panda.style.top = y + 'px';
+
+        const dx = (Math.random() - 0.5) * 300 + 'px';
+        const dy = (Math.random() - 0.5) * 300 + 'px';
+        panda.style.setProperty('--dx', dx);
+        panda.style.setProperty('--dy', dy);
+
+        document.body.appendChild(panda);
+        setTimeout(() => panda.remove(), 1000);
+      }
     }
   </script>
 </body>
