@@ -10,6 +10,7 @@
 </svelte:head>
 
 <div class="main-section">
+  <div class="smiley">◡̈</div>
 </div>
 
 <style>
@@ -46,6 +47,13 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+  }
+
+  .smiley {
+    font-size: 8rem;
+    color: #EEC643;
+    font-family: 'Courier New', monospace;
+    line-height: 1;
   }
 
 
