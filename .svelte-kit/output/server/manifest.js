@@ -10,11 +10,13 @@ return {
 	assets: new Set([]),
 	mimeTypes: {},
 	_: {
-		client: {start:"_app/immutable/entry/start.C2gRKRdC.js",app:"_app/immutable/entry/app.Cm7a7H-3.js",imports:["_app/immutable/entry/start.C2gRKRdC.js","_app/immutable/chunks/RfjqXYaj.js","_app/immutable/chunks/BGQszin6.js","_app/immutable/entry/app.Cm7a7H-3.js","_app/immutable/chunks/BGQszin6.js","_app/immutable/chunks/IHki7fMi.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.C39o8jvg.js",app:"_app/immutable/entry/app.BkWaQgnp.js",imports:["_app/immutable/entry/start.C39o8jvg.js","_app/immutable/chunks/BTQDK5Fc.js","_app/immutable/chunks/BvRgzv0k.js","_app/immutable/entry/app.BkWaQgnp.js","_app/immutable/chunks/BvRgzv0k.js","_app/immutable/chunks/IHki7fMi.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
-			__memo(() => import('./nodes/2.js'))
+			__memo(() => import('./nodes/2.js')),
+			__memo(() => import('./nodes/3.js')),
+			__memo(() => import('./nodes/4.js'))
 		],
 		routes: [
 			{
@@ -22,6 +24,20 @@ return {
 				pattern: /^\/$/,
 				params: [],
 				page: { layouts: [0,], errors: [1,], leaf: 2 },
+				endpoint: null
+			},
+			{
+				id: "/article/tobe-article",
+				pattern: /^\/article\/tobe-article\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 3 },
+				endpoint: null
+			},
+			{
+				id: "/countdown",
+				pattern: /^\/countdown\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 4 },
 				endpoint: null
 			}
 		],
