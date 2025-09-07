@@ -73,10 +73,11 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js"
+      "_ssr.js",
+      "_escape.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.UWnDFjrJ.css"
+      "_app/immutable/assets/_page.DokcZu_a.css"
     ]
   },
   "src/routes/article/tobe-article/+page.svelte": {

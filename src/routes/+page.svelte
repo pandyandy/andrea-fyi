@@ -1,5 +1,40 @@
 <script>
-  // No timer logic needed on main page anymore
+  import { onMount } from 'svelte';
+
+  // Timer variables
+  let timeRemaining = '';
+  let timerInterval;
+
+  function updateTimer() {
+    // September 26, 2025 at 12:05am CET (UTC+1)
+    // CET is UTC+1, so 12:05am CET = 11:05pm UTC on September 25, 2025
+    const targetDate = new Date('2025-09-25T23:05:00Z'); // 12:05am CET = 11:05pm UTC
+    const now = new Date();
+    const difference = targetDate.getTime() - now.getTime();
+
+    if (difference > 0) {
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      timeRemaining = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    } else {
+      timeRemaining = "Time's up! ♡";
+      clearInterval(timerInterval);
+    }
+  }
+
+  onMount(() => {
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+    
+    return () => {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+    };
+  });
 </script>
 
 <svelte:head>
@@ -10,6 +45,10 @@
 </svelte:head>
 
 <div class="main-section">
+  <h2>Hi ♡ jfyi</h2>
+  <div class="timer-display">
+    {timeRemaining}
+  </div>
   <div class="smiley">◡̈</div>
 </div>
 
@@ -47,6 +86,35 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+  }
+
+  .main-section h2 {
+    color: #EEC643;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-family: 'Courier New', monospace;
+    text-shadow: none;
+    font-weight: normal;
+    letter-spacing: 0;
+    animation: none;
+  }
+
+  .timer-display {
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    font-size: 2.5rem;
+    font-weight: normal;
+    color: #EFF0F2;
+    max-width: none;
+    margin: 0 auto 2rem auto;
+    transition: none;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0;
+    text-shadow: none;
+    position: relative;
+    overflow: visible;
   }
 
   .smiley {
