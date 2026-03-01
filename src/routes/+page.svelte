@@ -6,8 +6,11 @@
 </svelte:head>
 
 <div class="main-section">
-  <h1 class="greeting">Welcome:)</h1>
-  <a href="/about" class="nav-link">about me</a>
+  <h1 class="greeting">Hi:)</h1>
+  <div class="nav-links">
+    <a href="/about" class="nav-link">about me</a>
+    <a href="/coffee" class="nav-link nav-link-alt">coffee?</a>
+  </div>
 </div>
 
 <style>
@@ -43,6 +46,13 @@
     letter-spacing: -1px;
   }
 
+  .nav-links {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .nav-link {
     font-size: 1.2rem;
     font-weight: 600;
@@ -54,6 +64,11 @@
     box-shadow: 4px 4px 0px #1a1a1a;
     transform: rotate(1deg);
     transition: transform 0.1s, box-shadow 0.1s;
+  }
+
+  .nav-link-alt {
+    background: #fff7e0;
+    transform: rotate(-1.5deg);
   }
 
   .nav-link:hover {
