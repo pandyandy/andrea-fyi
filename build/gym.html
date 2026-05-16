@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="My Gym">
+<title>My Gym</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --blue:#007AFF;--purple:#5856D6;--orange:#FF9500;--green:#34C759;--red:#FF3B30;--gray:#8E8E93;
+  --bg:#F2F2F7;--card:#FFFFFF;--text:#000;--text2:#3C3C43CC;--text3:#8E8E93;--border:rgba(60,60,67,.12);
+  --safe-top:env(safe-area-inset-top,20px);--safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;color:var(--text)}
+#app{height:100%;display:flex;flex-direction:column;position:relative}
+.screen{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(66px + var(--safe-bottom))}
+
+/* TAB BAR */
+.tab-bar{position:fixed;bottom:0;left:0;right:0;height:calc(50px + var(--safe-bottom));background:rgba(249,249,249,.94);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;padding-bottom:var(--safe-bottom);z-index:100}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--gray);font-size:10px;font-weight:500;cursor:pointer;padding:2px 0}
+.tab.active{color:var(--blue)}
+.tab svg{width:24px;height:24px}
+
+/* HOME */
+.home-header{padding:calc(var(--safe-top) + 16px) 20px 0}
+.home-greeting{font-size:28px;font-weight:700;letter-spacing:-.5px;margin-bottom:2px}
+.home-date{font-size:15px;color:var(--text3);margin-bottom:24px}
+.day-cards{padding:0 16px;display:flex;flex-direction:column;gap:10px}
+.day-card{background:var(--card);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:transform .1s,opacity .1s}
+.day-card:active{transform:scale(.97);opacity:.85}
+.day-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.push-icon{background:#5856D610}
+.pull-icon{background:#34C75910}
+.legs-icon{background:#FF950010}
+.day-card-info{flex:1;min-width:0}
+.day-card-name{font-size:17px;font-weight:600}
+.day-card-focus{font-size:13px;color:var(--text3);margin-top:2px}
+.day-card-last{font-size:12px;color:var(--text3);margin-top:5px}
+.day-card-arrow{color:var(--border);font-size:18px}
+.section-header{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);padding:22px 20px 8px}
+
+/* INSTALL HINT */
+.install-hint{background:var(--card);border-radius:14px;margin:0 16px 4px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.install-icon{font-size:26px;line-height:1;flex-shrink:0}
+.install-body{flex:1}
+.install-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.install-desc{font-size:13px;color:var(--text3);line-height:1.5}
+.install-desc b{color:var(--text);font-weight:500}
+.install-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;line-height:1;padding:0}
+
+/* WORKOUT SCREEN */
+.workout-nav{padding:calc(var(--safe-top) + 10px) 16px 12px;display:flex;align-items:center;gap:8px;background:rgba(242,242,247,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:.5px solid var(--border);position:sticky;top:0;z-index:10}
+.back-btn{background:none;border:none;color:var(--blue);font-size:17px;cursor:pointer;padding:4px 8px 4px 0;font-family:inherit;display:flex;align-items:center;gap:2px}
+.workout-title{font-size:17px;font-weight:600;flex:1}
+.timer-badge{background:var(--bg);border-radius:8px;padding:4px 10px;font-size:14px;color:var(--text3);font-variant-numeric:tabular-nums}
+.prehab-banner{background:#FFF8E7;border-radius:12px;margin:14px 16px 0;padding:12px 14px;font-size:13px;color:#7d5a00;line-height:1.6}
+.prehab-banner b{display:block;font-size:14px;font-weight:600;margin-bottom:4px;color:#5a4000}
+
+/* EXERCISE CARDS */
+.ex-card{background:var(--card);margin:10px 16px 0;border-radius:14px;overflow:hidden}
+.ex-card-header{display:flex;align-items:center;padding:14px 16px;cursor:pointer;gap:12px;user-select:none}
+.ex-done-ring{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:12px;color:transparent}
+.ex-done-ring.done{background:var(--green);border-color:var(--green);color:#fff}
+.ex-card-info{flex:1;min-width:0}
+.ex-card-name{font-size:15px;font-weight:500}
+.ex-card-meta{font-size:13px;color:var(--text3);margin-top:2px}
+.ex-chevron{color:var(--border);font-size:16px;transition:transform .2s;flex-shrink:0}
+.ex-chevron.open{transform:rotate(90deg)}
+
+/* SET LOGGER */
+.set-logger{border-top:.5px solid var(--border);padding:12px 16px 14px;display:none}
+.set-logger.open{display:block}
+.last-note{font-size:12px;color:var(--text3);margin-bottom:10px}
+.sets-grid{display:grid;grid-template-columns:28px 1fr 1fr 36px;gap:6px;align-items:center}
+.sets-col-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:var(--text3);text-align:center;padding-bottom:4px}
+.sets-col-label:first-child{text-align:left}
+.set-num{font-size:14px;color:var(--text3);text-align:center}
+.set-field{background:var(--bg);border-radius:9px;display:flex;align-items:center;padding:9px 8px;gap:3px}
+.set-field input{flex:1;background:none;border:none;outline:none;font-size:16px;font-weight:500;color:var(--text);width:0;text-align:center;font-family:-apple-system,sans-serif;min-width:0}
+.set-field input::placeholder{color:var(--text3);font-weight:400;font-size:15px}
+.set-field .unit{font-size:11px;color:var(--text3);white-space:nowrap}
+.set-tick{width:34px;height:34px;border-radius:50%;border:2px solid var(--border);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-size:15px;color:transparent;flex-shrink:0}
+.set-tick.done{background:var(--green);border-color:var(--green);color:#fff}
+.set-actions{display:flex;align-items:center;margin-top:12px;gap:12px}
+.add-set{background:none;border:none;color:var(--blue);font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;padding:0}
+.yt-btn{margin-left:auto;display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;font-family:inherit}
+.yt-logo{width:18px;height:13px;background:#FF0000;border-radius:3px;display:flex;align-items:center;justify-content:center}
+.yt-logo svg{width:8px;height:8px;fill:#fff}
+
+/* FINISH */
+.finish-wrap{padding:20px 16px 8px}
+.finish-btn{width:100%;background:var(--blue);color:#fff;border:none;border-radius:14px;padding:17px;font-size:17px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:-.2px;transition:opacity .15s}
+.finish-btn:active{opacity:.8}
+
+/* HISTORY */
+.hist-empty{text-align:center;padding:80px 20px;color:var(--text3);font-size:16px;line-height:1.7}
+.hist-card{background:var(--card);border-radius:14px;margin:0 16px 10px;padding:14px 16px}
+.hist-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.hist-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hist-day-name{font-size:16px;font-weight:600;flex:1}
+.hist-date{font-size:13px;color:var(--text3)}
+.hist-dur{font-size:13px;color:var(--text3);margin-bottom:8px;padding-left:20px}
+.hist-ex-list{display:flex;flex-direction:column;gap:3px;padding-left:20px}
+.hist-ex-row{font-size:13px;color:var(--text3);line-height:1.6}
+.hist-ex-name{color:var(--text);font-weight:500}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ── PLAN DATA ──────────────────────────────────────────────────────────────────
+const PLAN = {
+  push: {
+    name: 'Push', emoji: '💪', color: '#5856D6', iconClass: 'push-icon',
+    focus: 'Chest · Shoulders · Triceps · Core',
+    prehab: null,
+    exercises: [
+      {id:'bench',    name:'Barbell bench press',      sets:4, reps:'5–7',    note:'Add weight when you hit 7 clean reps', yt:'barbell bench press proper form Jeff Nippard'},
+      {id:'incline',  name:'Incline dumbbell press',   sets:3, reps:'10–12',  note:'3-sec controlled lowering', yt:'incline dumbbell press form tutorial'},
+      {id:'ohp',      name:'Overhead press',           sets:4, reps:'6–8',    note:'Brace your core hard', yt:'overhead press proper form barbell tutorial'},
+      {id:'laterals', name:'Cable lateral raises',     sets:3, reps:'12–15',  note:'Light weight, full range of motion', yt:'cable lateral raise form tips side delt'},
+      {id:'pushdown', name:'Tricep pushdown (cable)',  sets:3, reps:'12',     note:'Elbows tucked at sides throughout', yt:'tricep pushdown proper form cable'},
+      {id:'triext',   name:'Overhead tricep extension',sets:3, reps:'12',     note:'Cable or dumbbell', yt:'overhead tricep extension form tutorial'},
+      {id:'plank',    name:'Plank',                    sets:3, reps:'45–60s', note:'Squeeze glutes, breathe steadily', yt:'perfect plank form tutorial core'},
+      {id:'deadbug',  name:'Dead bug',                 sets:3, reps:'10/side',note:'Lower back stays flat on the floor', yt:'dead bug exercise form tutorial core stability'},
+      {id:'pallof',   name:'Pallof press (cable)',     sets:3, reps:'12/side',note:'Resist rotation — core stays locked', yt:'pallof press tutorial anti rotation core'},
+    ]
+  },
+  pull: {
+    name: 'Pull', emoji: '🔙', color: '#34C759', iconClass: 'pull-icon',
+    focus: 'Back · Biceps · Rear Delts · Core',
+    prehab: null,
+    exercises: [
+      {id:'pullups',  name:'Pull-ups / Lat pulldown',  sets:4, reps:'5–8',    note:'Use assisted machine if needed', yt:'pull-up proper form tutorial beginner lat pulldown'},
+      {id:'bbrow',    name:'Barbell row',               sets:4, reps:'6–8',    note:'Retract shoulder blades at the top', yt:'barbell row proper form tutorial Jeff Nippard'},
+      {id:'dbrow',    name:'Single-arm dumbbell row',   sets:3, reps:'10–12/side', note:'Big range of motion', yt:'single arm dumbbell row perfect form'},
+      {id:'facepl',   name:'Face pulls (cable, rope)',  sets:3, reps:'15–20',  note:'Light weight — shoulder health priority', yt:'face pulls proper form shoulder health Jeff Nippard'},
+      {id:'curl',     name:'Barbell or dumbbell curl',  sets:3, reps:'10–12',  note:'Elbows pinned at sides', yt:'bicep curl proper form barbell dumbbell tutorial'},
+      {id:'hammer',   name:'Hammer curls',              sets:3, reps:'10–12',  note:'Neutral grip throughout', yt:'hammer curl proper form technique tutorial'},
+      {id:'birddog',  name:'Bird dog',                  sets:3, reps:'10/side',note:'Hips stay square, slow and controlled', yt:'bird dog exercise proper form tutorial core stability'},
+      {id:'hangknee', name:'Hanging knee raises',       sets:3, reps:'10–12',  note:'Curl pelvis up — don\'t just lift legs', yt:'hanging knee raise proper form ab exercise'},
+      {id:'woodchop', name:'Cable woodchop',            sets:3, reps:'12/side',note:'Rotation from the torso, not arms', yt:'cable woodchop proper form oblique core exercise'},
+    ]
+  },
+  legs: {
+    name: 'Legs', emoji: '🦵', color: '#FF9500', iconClass: 'legs-icon',
+    focus: 'Lower body · Hip strength · IT band',
+    prehab: 'Do this before loading — it takes 15 min and is the most important part for your IT band:\nFoam roll IT band, TFL, glutes, quads (60s each) → Clamshells 3×15/side → Hip abduction 3×15/side → Glute bridge 2×15 → Hip flexor stretch 3×30s/side → Lateral band walks 2×15.',
+    exercises: [
+      {id:'squat',    name:'Barbell back squat',        sets:4, reps:'5–7',    note:'Substitute goblet squat if knee pain', yt:'barbell back squat perfect form tutorial Jeff Nippard'},
+      {id:'rdl',      name:'Romanian deadlift',         sets:4, reps:'8–10',   note:'Push hips back, feel the hamstring stretch', yt:'Romanian deadlift RDL proper form tutorial'},
+      {id:'bss',      name:'Bulgarian split squat',     sets:3, reps:'8–10/leg', note:'Best single-leg builder for runners', yt:'Bulgarian split squat form tutorial Jeff Nippard'},
+      {id:'hipthrust',name:'Barbell hip thrust',        sets:4, reps:'10–12',  note:'Squeeze glutes hard at the top — key for IT band', yt:'barbell hip thrust perfect form tutorial glutes'},
+      {id:'hipabduct',name:'Hip abduction machine',     sets:3, reps:'15–20',  note:'Full range — directly targets IT band weakness', yt:'hip abduction machine proper form glute medius'},
+      {id:'legcurl',  name:'Lying leg curl',            sets:3, reps:'12',     note:'3-sec lowering phase', yt:'lying leg curl proper form hamstring machine'},
+      {id:'calf',     name:'Standing calf raises',      sets:4, reps:'15–20',  note:'Use a step, full range, slow and controlled', yt:'standing calf raises proper form full range of motion'},
+    ]
+  }
+};
+
+// ── STATE ──────────────────────────────────────────────────────────────────────
+let screen = 'home';
+let activeDay = null;
+let workoutStart = null;
+let timerHandle = null;
+let showInstall = !localStorage.getItem('installDismissed');
+
+// ── STORAGE ────────────────────────────────────────────────────────────────────
+function getLog() { try { return JSON.parse(localStorage.getItem('gymLog') || '[]'); } catch(e){ return []; } }
+function getLast() { try { return JSON.parse(localStorage.getItem('gymLast') || '{}'); } catch(e){ return {}; } }
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short'});
+}
+function formatDur(ms) {
+  const m = Math.floor(ms/60000);
+  return m < 60 ? `${m} min` : `${Math.floor(m/60)}h ${m%60}m`;
+}
+function dayColor(day) {
+  return day === 'push' ? '#5856D6' : day === 'pull' ? '#34C759' : '#FF9500';
+}
+function lastTrained(day) {
+  const log = getLog();
+  const sessions = log.filter(s => s.day === day);
+  if (!sessions.length) return 'Not trained yet';
+  const last = sessions[sessions.length - 1];
+  return 'Last: ' + formatDate(last.date);
+}
+
+// ── TIMER ──────────────────────────────────────────────────────────────────────
+function startTimer() {
+  if (timerHandle) clearInterval(timerHandle);
+  timerHandle = setInterval(() => {
+    const el = document.getElementById('timer');
+    if (!el) { clearInterval(timerHandle); return; }
+    const ms = Date.now() - workoutStart;
+    const m = Math.floor(ms/60000);
+    const s = Math.floor((ms%60000)/1000);
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+function stopTimer() { if (timerHandle) { clearInterval(timerHandle); timerHandle = null; } }
+
+// ── RENDER ─────────────────────────────────────────────────────────────────────
+function render() {
+  const app = document.getElementById('app');
+  if (screen === 'home') app.innerHTML = homeHTML() + tabBarHTML('home');
+  else if (screen === 'workout') app.innerHTML = workoutHTML() + tabBarHTML('workout');
+  else if (screen === 'history') app.innerHTML = historyHTML() + tabBarHTML('history');
+}
+
+function tabBarHTML(active) {
+  return `<div class="tab-bar">
+    <div class="tab ${active==='home'?'active':''}" onclick="goHome()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </div>
+    <div class="tab ${active==='history'?'active':''}" onclick="goHistory()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      History
+    </div>
+  </div>`;
+}
+
+// ── HOME ───────────────────────────────────────────────────────────────────────
+function homeHTML() {
+  const h = new Date().getHours();
+  const greeting = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  const dateStr = new Date().toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long'});
+  const days = ['push','pull','legs'];
+  const cards = days.map(d => {
+    const p = PLAN[d];
+    return `<div class="day-card" onclick="startDay('${d}')">
+      <div class="day-icon ${p.iconClass}">${p.emoji}</div>
+      <div class="day-card-info">
+        <div class="day-card-name" style="color:${p.color}">${p.name}</div>
+        <div class="day-card-focus">${p.focus}</div>
+        <div class="day-card-last">${lastTrained(d)}</div>
+      </div>
+      <div class="day-card-arrow">›</div>
+    </div>`;
+  }).join('');
+
+  const hint = showInstall ? `<div class="install-hint">
+    <div class="install-icon">📲</div>
+    <div class="install-body">
+      <div class="install-title">Add to your home screen</div>
+      <div class="install-desc">Tap <b>Share ↑</b> in Safari, then <b>"Add to Home Screen"</b> to use this like an app.</div>
+    </div>
+    <button class="install-close" onclick="dismissInstall()">×</button>
+  </div>` : '';
+
+  return `<div class="screen" id="screen">
+    <div class="home-header">
+      <div class="home-greeting">${greeting}, Andrea 👋</div>
+      <div class="home-date">${dateStr}</div>
+    </div>
+    ${hint}
+    <div class="section-header">Choose today's workout</div>
+    <div class="day-cards">${cards}</div>
+    <div style="height:16px"></div>
+  </div>`;
+}
+
+// ── WORKOUT ────────────────────────────────────────────────────────────────────
+function workoutHTML() {
+  const p = PLAN[activeDay];
+  const last = getLast();
+  const exCards = p.exercises.map(ex => exCardHTML(ex, last[ex.id])).join('');
+  const prehab = p.prehab ? `<div class="prehab-banner"><b>🧡 Warm-up & prehab — do this first</b>${p.prehab.replace(/\n/g,'<br>')}</div>` : '';
+  return `<div class="screen">
+    <div class="workout-nav">
+      <button class="back-btn" onclick="goHome()">‹ Back</button>
+      <div class="workout-title">${p.emoji} ${p.name} Day</div>
+      <div class="timer-badge" id="timer">00:00</div>
+    </div>
+    ${prehab}
+    <div style="height:4px"></div>
+    ${exCards}
+    <div class="finish-wrap">
+      <button class="finish-btn" onclick="finishWorkout()">Finish Workout ✓</button>
+    </div>
+    <div style="height:8px"></div>
+  </div>`;
+}
+
+function exCardHTML(ex, lastData) {
+  const lastStr = lastData ? `Last time: ${lastData.sets.map(s=>`${s.w}kg×${s.r}`).join(', ')}` : 'First time — start light, focus on form';
+  let setRows = '';
+  for (let i = 0; i < ex.sets; i++) {
+    const lw = lastData && lastData.sets[i] ? lastData.sets[i].w : '';
+    const lr = lastData && lastData.sets[i] ? lastData.sets[i].r : '';
+    setRows += setRowHTML(ex.id, i, lw, lr);
+  }
+  return `<div class="ex-card" id="excard-${ex.id}">
+    <div class="ex-card-header" onclick="toggleEx('${ex.id}')">
+      <div class="ex-done-ring" id="ring-${ex.id}"></div>
+      <div class="ex-card-info">
+        <div class="ex-card-name">${ex.name}</div>
+        <div class="ex-card-meta">${ex.sets} sets × ${ex.reps} · ${ex.note}</div>
+      </div>
+      <div class="ex-chevron" id="chev-${ex.id}">›</div>
+    </div>
+    <div class="set-logger" id="logger-${ex.id}">
+      <div class="last-note" id="lastnote-${ex.id}">${lastStr}</div>
+      <div class="sets-grid">
+        <div class="sets-col-label">Set</div>
+        <div class="sets-col-label">Weight</div>
+        <div class="sets-col-label">Reps</div>
+        <div class="sets-col-label"></div>
+      </div>
+      <div id="sets-${ex.id}">${setRows}</div>
+      <div class="set-actions">
+        <button class="add-set" onclick="addSet('${ex.id}')">+ Add set</button>
+        <button class="yt-btn" onclick="openYT('${ex.yt}')">
+          <span class="yt-logo"><svg viewBox="0 0 10 8"><polygon points="2,1 9,4 2,7"/></svg></span>
+          Tutorial
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function setRowHTML(exId, idx, w, r) {
+  return `<div class="sets-grid" id="setrow-${exId}-${idx}" style="margin-top:5px">
+    <div class="set-num">${idx+1}</div>
+    <div class="set-field">
+      <input type="number" inputmode="decimal" min="0" step="0.5" placeholder="kg" value="${w}" id="w-${exId}-${idx}">
+      <span class="unit">kg</span>
+    </div>
+    <div class="set-field">
+      <input type="number" inputmode="numeric" min="0" step="1" placeholder="reps" value="${r}" id="r-${exId}-${idx}">
+    </div>
+    <button class="set-tick" id="tick-${exId}-${idx}" onclick="tickSet('${exId}',${idx})"></button>
+  </div>`;
+}
+
+// ── HISTORY ────────────────────────────────────────────────────────────────────
+function historyHTML() {
+  const log = getLog();
+  if (!log.length) {
+    return `<div class="screen">
+      <div class="home-header"><div class="home-greeting">History</div></div>
+      <div class="hist-empty">No workouts logged yet.<br>Complete your first session to see it here.</div>
+    </div>`;
+  }
+  const cards = [...log].reverse().map(s => {
+    const p = PLAN[s.day];
+    const exLines = s.exercises.map(e => {
+      const setsStr = e.sets.map(st => `${st.w||'—'}kg×${st.r||'—'}`).join(', ');
+      return `<div class="hist-ex-row"><span class="hist-ex-name">${e.name}</span>: ${setsStr}</div>`;
+    }).join('');
+    return `<div class="hist-card">
+      <div class="hist-top">
+        <div class="hist-dot" style="background:${p.color}"></div>
+        <div class="hist-day-name">${p.emoji} ${p.name} Day</div>
+        <div class="hist-date">${formatDate(s.date)}</div>
+      </div>
+      <div class="hist-dur">⏱ ${formatDur(s.duration)}</div>
+      <div class="hist-ex-list">${exLines}</div>
+    </div>`;
+  }).join('');
+  return `<div class="screen">
+    <div class="home-header"><div class="home-greeting">History</div><div class="home-date">${log.length} session${log.length!==1?'s':''} logged</div></div>
+    <div class="hist-list" style="padding:0 0 8px">${cards}</div>
+  </div>`;
+}
+
+// ── ACTIONS ────────────────────────────────────────────────────────────────────
+function goHome() {
+  stopTimer();
+  screen = 'home';
+  activeDay = null;
+  workoutStart = null;
+  render();
+}
+function goHistory() {
+  stopTimer();
+  screen = 'history';
+  render();
+}
+function startDay(day) {
+  activeDay = day;
+  workoutStart = Date.now();
+  screen = 'workout';
+  render();
+  startTimer();
+}
+function dismissInstall() {
+  showInstall = false;
+  localStorage.setItem('installDismissed','1');
+  render();
+}
+function toggleEx(id) {
+  const logger = document.getElementById('logger-' + id);
+  const chev = document.getElementById('chev-' + id);
+  const isOpen = logger.classList.contains('open');
+  logger.classList.toggle('open', !isOpen);
+  chev.classList.toggle('open', !isOpen);
+}
+function tickSet(exId, idx) {
+  const btn = document.getElementById('tick-' + exId + '-' + idx);
+  btn.classList.toggle('done');
+  const allTicks = document.querySelectorAll(`[id^="tick-${exId}-"]`);
+  const allDone = [...allTicks].every(t => t.classList.contains('done'));
+  const ring = document.getElementById('ring-' + exId);
+  ring.classList.toggle('done', allDone);
+  if (allDone) {
+    ring.textContent = '✓';
+  } else {
+    ring.textContent = '';
+  }
+}
+function addSet(exId) {
+  const container = document.getElementById('sets-' + exId);
+  const existing = container.querySelectorAll('[id^="setrow-' + exId + '-"]').length;
+  const div = document.createElement('div');
+  div.innerHTML = setRowHTML(exId, existing, '', '');
+  container.appendChild(div.firstChild);
+}
+function openYT(query) {
+  window.open('https://www.youtube.com/results?search_query=' + encodeURIComponent(query), '_blank');
+}
+
+function finishWorkout() {
+  if (!activeDay) return;
+  const p = PLAN[activeDay];
+  const last = getLast();
+  const sessionExercises = [];
+  p.exercises.forEach(ex => {
+    const setsContainer = document.getElementById('sets-' + ex.id);
+    if (!setsContainer) return;
+    const rows = setsContainer.querySelectorAll('[id^="setrow-' + ex.id + '-"]');
+    const sets = [];
+    rows.forEach((row, i) => {
+      const wEl = document.getElementById('w-' + ex.id + '-' + i);
+      const rEl = document.getElementById('r-' + ex.id + '-' + i);
+      const w = wEl ? parseFloat(wEl.value) || '' : '';
+      const r = rEl ? parseFloat(rEl.value) || '' : '';
+      sets.push({w, r});
+    });
+    sessionExercises.push({id: ex.id, name: ex.name, sets});
+    last[ex.id] = {sets};
+  });
+  const session = {
+    day: activeDay,
+    date: Date.now(),
+    duration: Date.now() - workoutStart,
+    exercises: sessionExercises
+  };
+  const log = getLog();
+  log.push(session);
+  localStorage.setItem('gymLog', JSON.stringify(log));
+  localStorage.setItem('gymLast', JSON.stringify(last));
+  stopTimer();
+  workoutStart = null;
+  activeDay = null;
+  screen = 'home';
+  render();
+  // Brief success feedback
+  setTimeout(() => {
+    const el = document.querySelector('.home-greeting');
+    if (el) { const orig = el.textContent; el.textContent = '✅ Workout saved!'; setTimeout(()=>{ el.textContent = orig; }, 2000); }
+  }, 100);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
