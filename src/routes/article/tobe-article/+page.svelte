@@ -16,14 +16,14 @@
   max-width: 700px;
   margin: 4rem auto;
   padding: 2rem;
-  background: #f8f9fa;
+  background: #fefef5;
   border-radius: 12px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   color: #222;
   font-family: 'Courier New', Courier, monospace;
 }
 .article-main h1 {
-  color: #FF69B4;
+  color: #2a5654;
   font-size: 2.2rem;
   margin-bottom: 1.5rem;
 }

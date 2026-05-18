@@ -504,7 +504,7 @@
   }
 
   .hud-box {
-    background: #fff;
+    background: #fefef5;
     border: 3px solid #1a1a1a;
     box-shadow: 4px 4px 0 #1a1a1a;
     padding: 0.35rem 1rem;
@@ -514,7 +514,7 @@
   }
 
   .hud-box.urgent {
-    background: #ffd6d6;
+    background: #e5d1d1;
     animation: pulse 0.5s infinite alternate;
   }
 
@@ -540,7 +540,7 @@
   }
 
   .card {
-    background: #fff;
+    background: #fefef5;
     border: 4px solid #1a1a1a;
     box-shadow: 8px 8px 0 #1a1a1a;
     padding: 2.5rem 3rem;
@@ -590,7 +590,7 @@
     margin-bottom: 0.4rem;
   }
 
-  .new-best  { color: #d07000; font-weight: 700; font-size: 1rem; }
+  .new-best  { color: #8a9445; font-weight: 700; font-size: 1rem; }
   .prev-best { color: #aaa;    font-size: 0.9rem; }
 
   /* ── BUTTON ── */
@@ -598,7 +598,7 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
-    background: #ffe066;
+    background: #d5c472;
     color: #1a1a1a;
     border: 3px solid #1a1a1a;
     box-shadow: 4px 4px 0 #1a1a1a;
@@ -631,7 +631,7 @@
     font-weight: 600;
     color: #1a1a1a;
     text-decoration: none;
-    background: #fff;
+    background: #fefef5;
     border: 3px solid #1a1a1a;
     box-shadow: 4px 4px 0 #1a1a1a;
     padding: 0.4rem 1rem;

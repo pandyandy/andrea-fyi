@@ -164,7 +164,7 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    background: #ffffff;
+    background: #fefef5;
     color: #1a1a1a;
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
@@ -185,7 +185,7 @@
     text-decoration: none;
     border: 3px solid #1a1a1a;
     padding: 0.4rem 1rem;
-    background: #ffffff;
+    background: #fefef5;
     box-shadow: 4px 4px 0px #1a1a1a;
     display: inline-block;
     transition: transform 0.1s, box-shadow 0.1s;
@@ -234,7 +234,7 @@
 
   .coffee-card {
     border: 3px solid #1a1a1a;
-    background: #ffffff;
+    background: #fefef5;
     box-shadow: 3px 3px 0px #1a1a1a;
     padding: 0.85rem 0.6rem;
     cursor: pointer;
@@ -250,11 +250,11 @@
   .coffee-card:hover {
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0px #1a1a1a;
-    background: #fafafa;
+    background: #ede9db;
   }
 
   .coffee-card.selected {
-    background: #fff7b0;
+    background: #d5c472;
     box-shadow: 5px 5px 0px #1a1a1a;
     transform: translate(-1px, -1px);
   }
@@ -280,7 +280,7 @@
     font-weight: 700;
     border: 2px solid #1a1a1a;
     padding: 0.1rem 0.35rem;
-    background: #f0f0f0;
+    background: #dbe0e6;
     margin-top: 0.25rem;
   }
 
@@ -305,7 +305,7 @@
     border: 3px solid #1a1a1a;
     padding: 0.5rem 0.9rem;
     box-shadow: 4px 4px 0px #1a1a1a;
-    background: #ffffff;
+    background: #fefef5;
     width: 100%;
     cursor: pointer;
     outline: none;
@@ -314,7 +314,7 @@
   }
 
   .time-input:focus {
-    background: #fff7b0;
+    background: #d5c472;
   }
 
   /* Result box */
@@ -325,9 +325,9 @@
     margin-top: 0.5rem;
   }
 
-  .result-ok         { background: #c8f7c5; }
-  .result-borderline { background: #fff7b0; }
-  .result-late       { background: #ffd4d4; }
+  .result-ok         { background: #99bdc1; }
+  .result-borderline { background: #d5c472; }
+  .result-late       { background: #e5d1d1; }
 
   .result-headline {
     font-size: 1.6rem;
@@ -360,7 +360,7 @@
   }
 
   .stat-warn {
-    background: rgba(255, 100, 100, 0.15);
+    background: #e5d1d1;
   }
 
   .stat-label {

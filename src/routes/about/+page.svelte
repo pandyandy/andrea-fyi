@@ -19,7 +19,7 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    background: #ffffff;
+    background: #fefef5;
     color: #1a1a1a;
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
@@ -40,7 +40,7 @@
     text-decoration: none;
     border: 3px solid #1a1a1a;
     padding: 0.4rem 1rem;
-    background: #ffffff;
+    background: #fefef5;
     box-shadow: 4px 4px 0px #1a1a1a;
     display: inline-block;
     transition: transform 0.1s, box-shadow 0.1s;
@@ -66,7 +66,7 @@
     color: #1a1a1a;
     border: 4px solid #1a1a1a;
     padding: 1rem 2rem;
-    background: #ffffff;
+    background: #fefef5;
     box-shadow: 6px 6px 0px #1a1a1a;
     transform: rotate(-1deg);
     display: inline-block;
@@ -76,7 +76,7 @@
   .cv-placeholder {
     border: 3px solid #1a1a1a;
     padding: 2rem;
-    background: #ffffff;
+    background: #fefef5;
     box-shadow: 4px 4px 0px #1a1a1a;
     font-size: 1.1rem;
   }

@@ -427,7 +427,7 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    background: #ffffff;
+    background: #fefef5;
     color: #1a1a1a;
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
@@ -448,7 +448,7 @@
     text-decoration: none;
     border: 3px solid #1a1a1a;
     padding: 0.4rem 1rem;
-    background: #ffffff;
+    background: #fefef5;
     box-shadow: 4px 4px 0px #1a1a1a;
     display: inline-block;
     transition: transform 0.1s, box-shadow 0.1s;
@@ -509,7 +509,7 @@
     border: 3px solid #1a1a1a;
     padding: 0.55rem 0.75rem;
     box-shadow: 3px 3px 0px #1a1a1a;
-    background: #ffffff;
+    background: #fefef5;
     cursor: pointer;
     outline: none;
     color: #1a1a1a;
@@ -522,7 +522,7 @@
     background-position: right 0.75rem center;
     padding-right: 2.5rem;
   }
-  .tz-select:focus { background-color: #fff7b0; }
+  .tz-select:focus { background-color: #d5c472; }
 
   .arrow-between {
     font-size: 1.5rem;
@@ -547,7 +547,7 @@
     border: 3px solid #1a1a1a;
     padding: 0.45rem 0.85rem;
     box-shadow: 3px 3px 0px #1a1a1a;
-    background: #ffffff;
+    background: #fefef5;
     width: 100%;
     cursor: pointer;
     outline: none;
@@ -555,7 +555,7 @@
     transition: background 0.1s;
     box-sizing: border-box;
   }
-  .time-input:focus { background: #fff7b0; }
+  .time-input:focus { background: #d5c472; }
 
   /* Toggle */
   .toggle-label {
@@ -597,7 +597,7 @@
   }
 
   .toggle-input:checked + .toggle-track {
-    background: #a5f3a5;
+    background: #8a9445;
   }
 
   .toggle-input:checked + .toggle-track::after {
@@ -631,7 +631,7 @@
     margin-top: 2.5rem;
     border: 3px solid #1a1a1a;
     padding: 1.5rem;
-    background: #c8f7c5;
+    background: #99bdc1;
     box-shadow: 5px 5px 0px #1a1a1a;
   }
   .same-zone-head { font-size: 1.4rem; font-weight: 700; margin: 0 0 0.4rem 0; }
@@ -643,7 +643,7 @@
     margin-bottom: 1.5rem;
     border: 3px solid #1a1a1a;
     padding: 1.25rem 1.5rem;
-    background: #fff7b0;
+    background: #d5c472;
     box-shadow: 5px 5px 0px #1a1a1a;
   }
 
@@ -690,10 +690,10 @@
     overflow: hidden;
   }
 
-  .day-pre-travel  { background: #dbeafe; }
-  .day-travel      { background: #fef9c3; }
-  .day-post-arrival{ background: #ede9fe; }
-  .day-adjusted    { background: #dcfce7; }
+  .day-pre-travel  { background: #dbe0e6; }
+  .day-travel      { background: #d5c472; }
+  .day-post-arrival{ background: #c8b2ce; }
+  .day-adjusted    { background: #99bdc1; }
 
   .day-header {
     padding: 0.85rem 1.25rem 0.7rem 1.25rem;
@@ -829,10 +829,10 @@
     flex-wrap: wrap;
   }
 
-  .strip-seek      { background: #fefce8; border-color: #d97706; }
-  .strip-avoid     { background: #fff1f2; border-color: #e11d48; }
-  .strip-caffeine  { background: #f0f0f0; border-color: #555; }
-  .strip-melatonin { background: #f0fdf4; border-color: #16a34a; }
+  .strip-seek      { background: #d5c472; border-color: #8a9445; }
+  .strip-avoid     { background: #e5d1d1; border-color: #771c31; }
+  .strip-caffeine  { background: #dbe0e6; border-color: #555; }
+  .strip-melatonin { background: #c8b2ce; border-color: #2a5654; }
 
   .strip-left {
     display: flex;
@@ -870,7 +870,7 @@
     margin: 0.9rem 0 0 0;
     font-size: 0.87rem;
     font-weight: 700;
-    color: #16a34a;
+    color: #2a5654;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
